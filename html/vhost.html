@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CluckCDN Admin</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/css/mdui.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto Sans TC">
+    <link rel="stylesheet" href="/script/style.css">
+    <link rel="shortcut icon" href="https://ci.cncn3.cn/f36237745411d246aa0379384e7bf342.png">
+    <style>
+        body {
+          font-family: "Noto Sans TC", sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mdui-col-md-10 mdui-col-offset-md-1 mdui-m-y-4">
+        <div class="mdui-typo">
+            <pre id="conf"></pre>
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+    <script>
+        window.onload=function(){
+            $.ajax({
+                url: "/vhost.conf",
+                type: "GET",
+                success: function(re){
+                    document.getElementById("conf").innerText=re;
+                },
+                error: function(){
+                    mdui.snackbar({
+                        message: 'API Connect Error',
+                        position: 'left-bottom'
+                    });
+                }
+            })
+        }
+    </script>
+</body>
+</html>

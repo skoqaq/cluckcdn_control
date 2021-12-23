@@ -1,0 +1,22 @@
+[
+    {
+        "host": "testnode.com",
+        "name": "TestWebSite",
+        "proto": "https",
+        "source": "172.217.31.227",
+        "source_host": "www.google.com.hk",
+        "text": "Test",
+        "tls": false
+    },
+    {
+        "host": "192.168.48.138",
+        "key": "/node/tls/192.168.48.138.key",
+        "name": "Test",
+        "pen": "/node/tls/192.168.48.138.pen",
+        "proto": "https",
+        "source": "172.217.31.227",
+        "source_host": "www.google.com.hk",
+        "text": "Test",
+        "tls": true
+    }
+]

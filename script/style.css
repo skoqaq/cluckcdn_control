@@ -1,0 +1,37 @@
+.card-m {
+    margin: 10px 1px;
+}
+.card-info {
+    height: 64px;
+}
+b, img, i {
+    user-select: none;
+}
+.info-text{
+    font-size: 35%;
+    margin-top: 2px;
+}
+.cluck-button {
+    float: left;
+    width: 25%;
+}
+.cluck-button-2 {
+    float: left;
+    width: 20%;
+}
+@media screen and (min-width: 600px) {
+    .l-text {
+        margin-left: 16px;
+        max-width: calc(100% - 135px);
+    }
+}
+@media screen and (max-width: 650px) {
+    .l-button{
+        height: 46px;
+        line-height: 46px;
+    }
+}
+.web-2 {
+    font-weight: 500;
+    user-select: none;
+}

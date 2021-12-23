@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CluckCDN Admin</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/css/mdui.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto Sans TC">
+    <link rel="stylesheet" href="/script/style.css">
+    <link rel="shortcut icon" href="https://ci.cncn3.cn/f36237745411d246aa0379384e7bf342.png">
+    <style>
+        body {
+          font-family: "Noto Sans TC", sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mdui-m-a-3">
+        <div class="mdui-btn-group" style="width: 100%;">
+            <button type="button" class="mdui-btn mdui-ripple" style="width: 50%;" mdui-dialog="{target: '#add'}"><i class="mdui-icon material-icons">add</i> Add</button>
+            <button type="button" class="mdui-btn mdui-ripple" style="width: 50%;" onclick="setAllNodeStatus('update')"><i class="mdui-icon material-icons">cloud_upload</i> Update</button>
+        </div>
+    </div>    
+    <div class="mdui-m-a-4" style="margin-top: 16px !important;">
+        <div class="mdui-row-xs-2 mdui-row-md-3" id="nodelist">
+            <div class="mdui-p-t-4">
+                <div class="mdui-spinner mdui-spinner-colorful mdui-center"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mdui-dialog" id="add">
+        <div class="mdui-dialog-title">Add WebSite</div>
+        <div class="mdui-dialog-content">
+            <div class="mdui-textfield" style="margin-top: 0;">
+                <input class="mdui-textfield-input" id="add_name" type="text" placeholder="*網站名稱"/>
+              </div>
+            <div class="mdui-textfield" style="margin-top: 0;">
+                <input class="mdui-textfield-input" id="add_host" type="text" placeholder="*Host"/>
+            </div>
+            <div class="mdui-textfield" style="margin-top: 0;">
+                <input class="mdui-textfield-input" id="add_source_host" type="text" placeholder="*回源 Host"/>
+            </div>
+            <div class="mdui-textfield" style="margin-top: 0;">
+                <input class="mdui-textfield-input" id="add_source" type="text" placeholder="*源伺服器 IP"/>
+            </div>
+            <div class="mdui-textfield" style="margin-top: 0;">
+                <input class="mdui-textfield-input" id="add_text" type="text" placeholder="註解 (可選)"/>
+            </div>
+            <div class="mdui-m-t-1">
+                <span style="font-weight: bold;">回源協議</span><br>
+                <label class="mdui-radio">
+                    <input type="radio" name="proto" data-tls="http"/>
+                    <i class="mdui-radio-icon"></i>
+                    HTTP
+                </label>
+                <label class="mdui-radio mdui-m-l-2">
+                    <input type="radio" name="proto" data-tls="https" checked/>
+                    <i class="mdui-radio-icon"></i>
+                    HTTPS
+                </label>
+            </div>
+            <div class="mdui-m-t-1">
+                <span style="font-weight: bold;">TLS</span><br>
+                <label class="mdui-checkbox">
+                    <input type="checkbox" id="use_https" onclick="https()" checked/>
+                    <i class="mdui-checkbox-icon"></i>
+                    啟用 HTTPS
+                </label>
+            </div>
+            <div>
+                <div class="mdui-textfield" style="float: left;width: 50%;">
+                    <label class="mdui-textfield-label">PEN</label>
+                    <textarea class="mdui-textfield-input" rows="5" id="pen"></textarea>
+                </div>
+                <div class="mdui-textfield" style="float: left;width: 50%;">
+                    <label class="mdui-textfield-label">KEY</label>
+                    <textarea class="mdui-textfield-input" rows="5" id="key"></textarea>
+                </div>
+            </div>
+
+        </div>
+        <div class="mdui-dialog-actions">
+            <button class="mdui-btn mdui-ripple" mdui-dialog-close>Cancel</button>
+            <button class="mdui-btn mdui-ripple" onclick="addWebSite()" mdui-dialog-close>Add</button>
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+    <script src="/script/main.js"></script>
+    <script>
+        window.onload = function(){
+            getWebSite();
+        }
+    </script>
+</body>
+</html>

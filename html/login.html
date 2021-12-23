@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CluckCDN Admin</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/css/mdui.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto Sans TC">
+    <link rel="shortcut icon" href="https://ci.cncn3.cn/f36237745411d246aa0379384e7bf342.png">
+    <style>
+        body {
+          font-family: "Noto Sans TC", sans-serif;
+        }
+    </style>
+</head>
+<body class="mdui-appbar-with-toolbar">
+
+    <div class="mdui-appbar mdui-appbar-fixed">
+        <div class="mdui-toolbar mdui-color-blue-accent">
+            <a href="javascript:;" class="mdui-typo-title">CluckCDN</a>
+            <div class="mdui-toolbar-spacer"></div>
+        </div>
+    </div>
+
+    <div class="mdui-card mdui-col-md-6 mdui-col-offset-md-3 mdui-col-xs-10 mdui-col-offset-xs-1 mdui-m-t-4 mdui-color-orange-50">
+        <div class="mdui-m-a-2" style="text-align: center;">
+            <i class="mdui-icon material-icons">error</i>
+            CluckCDN 是一個正在開發中的專案
+        </div>
+    </div>
+    <div class="mdui-card mdui-col-md-6 mdui-col-offset-md-3 mdui-col-xs-10 mdui-col-offset-xs-1 mdui-m-t-3">
+        <div class="mdui-m-a-3" style="text-align: center;">
+            <h1>Login</h1>
+            <div style="text-align: left;">
+                <div class="mdui-textfield mdui-textfield-floating-label">
+                    <label class="mdui-textfield-label">Username</label>
+                    <input class="mdui-textfield-input" id="user" type="text"/>
+                </div>
+                <div class="mdui-textfield mdui-textfield-floating-label">
+                    <label class="mdui-textfield-label">Password</label>
+                    <input class="mdui-textfield-input" id="pass" type="password"/>
+                </div>
+            </div>
+            <button class="mdui-btn mdui-btn-block mdui-color-theme-accent mdui-ripple mdui-m-t-2 mdui-btn-raised mdui-color-blue" onclick="login()">Submit</button>
+        </div>
+    </div>
+    <div class="mdui-col-md-6 mdui-col-offset-md-3 mdui-col-xs-10 mdui-col-offset-xs-1">
+        <p style="text-align: center;">Copyright @ 2021 <a href="https://github.com/cluckcdn" target="_break" style="color: dodgerblue;text-decoration: none;">CluckCDN</a></p>
+    </div>
+
+    <!-- Script -->
+    <script src="https://cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js"></script>
+    <script>
+        function login(){
+            mdui.$.ajax({
+                url: "/api/login",
+                method: 'POST',
+                data: {"user": document.getElementById("user").value, "pass": document.getElementById("pass").value},
+                success: function(re){
+                    if (JSON.parse(re)['status'] == "ok"){
+                        window.location="/page/index";
+                    }else{
+                        mdui.snackbar({
+                            message: '使用者名稱/密碼錯誤',
+                            position: 'left-bottom'
+                        });
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
