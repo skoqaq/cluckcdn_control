@@ -13,7 +13,7 @@
 
 > We are still in the testing stage and welcome your comments
 
-### 1. Build
+### 1. Clone
 
 > Please install Golang
 
@@ -21,16 +21,24 @@
 # Clone
 git clone https://github.com/ArsFy/cluckcdn_control.git
 cd cluckcdn_control
-# Build
-go build .
 ```
 
 ### 2. Run!
 
+#### Download
+Open Releases and download the binary executable file
 ```bash
+wget xxxxx
 rm -rf *.go
-chmod 775 control
-./control
+chmod 775 xxxx
+./xxxx
+```
+#### Build
+```bash
+go build .
+rm -rf *.go
+chmod 775 cluckcdn_control
+./cluckcdn_control
 ```
 
 ### 3. Change setting 

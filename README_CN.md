@@ -15,28 +15,30 @@
 
 ### 1. 编译
 
-> 请安装 Golang (>=1.15)
+> 请安装 Golang
 
 ```bash
 # Clone
-git clone https://github.com/cluckcdn/control.git
-cd control
-# Downloads lib
-go get github.com/prometheus/common/log
-go get github.com/gin-contrib/sessions
-go get github.com/gin-contrib/sessions/cookie
-go get github.com/gin-gonic/gin
-go get gopkg.in/yaml.v3
-# Build
-go build .
+git clone https://github.com/ArsFy/cluckcdn_control.git
+cd cluckcdn_control
 ```
 
 ### 2. 运行！
 
+#### 下载
+打开 Releases 页，下载对应的二进制可执行文件
 ```bash
+wget xxxxx
 rm -rf *.go
-chmod 775 control
-./control
+chmod 775 xxxx
+./xxxx
+```
+#### 编译
+```bash
+go build .
+rm -rf *.go
+chmod 775 cluckcdn_control
+./cluckcdn_control
 ```
 
 ### 3. 修改设置
