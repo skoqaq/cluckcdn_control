@@ -4,7 +4,11 @@ function getIpFlag(ip){
     $.getJSON("https://api.ip.sb/geoip/"+ip,
         function(json) {
             if (json['country_code'] != undefined) {
-                url = `https://www.countryflags.io/${json['country_code']}/flat/64.png`;
+                //url = `https://www.countryflags.io/${json['country_code']}/flat/64.png`;
+                url_raw = `https://flagcdn.com/w40/${json['country_code'].png}`;
+                console.log(url_raw.toLowerCase());
+                url_new = url_raw.toLowerCase();
+                url = `https://flagcdn.com/w40/${["url_new"]}.png`;
             }else{
                 url = `https://www.countryflags.io/hk/flat/64.png`;
             }
