@@ -4,15 +4,10 @@ function getIpFlag(ip){
     $.getJSON("https://api.ip.sb/geoip/"+ip,
         function(json) {
             if (json['country_code'] != undefined) {
-                //url = `https://www.countryflags.io/${json['country_code']}/flat/64.png`;
-                url_raw = `https://flagcdn.com/w40/${json['country_code'].png}`;
-                console.log(url_raw.toLowerCase());
-                url_new = url_raw.toLowerCase();
-                url = `https://flagcdn.com/w40/${["url_new"]}.png`;
+                url = `https://flagcdn.com/w80/${json['country_code'].toLowerCase()}.png`;
             }else{
-                url = `https://www.countryflags.io/hk/flat/64.png`;
-            }
-            
+                url = `https://flagcdn.com/w80/hk.png`;
+            }            
         }
     );
     return url;
@@ -41,7 +36,7 @@ function getNode(s){
                 nodelist.innerHTML += `<div class="mdui-col">
     <div class="mdui-card card-m">
         <div class="mdui-m-a-2 card-info">
-            <img style="float: left;" src="${getIpFlag(re[i]["ip"])}">
+            <img style="float: left;height: 100%;" src="${getIpFlag(re[i]["ip"])}">
             <div style="float: left;" class="l-text">
                 <span style="font-size: 120%;font-weight: 500;">${re[i]["name"]}</span>
                 <div style="margin-top: 5px;">
@@ -73,11 +68,11 @@ function getNode(s){
 <div class="mdui-dialog" id="${re[i]["name"]}-del">
     <div class="mdui-dialog-title">Delete ${re[i]["name"]}</div>
     <div class="mdui-dialog-content">
-        你真的要刪掉這個節點嗎？
+        ${$.i18n.prop('ifdel')}
     </div>
     <div class="mdui-dialog-actions">
-        <button class="mdui-btn mdui-ripple" mdui-dialog-close>不要！</button>
-        <button class="mdui-btn mdui-ripple" onclick="delNode('${re[i]["ip"]}')" mdui-dialog-close>刪掉！</button>
+        <button class="mdui-btn mdui-ripple" mdui-dialog-close>${$.i18n.prop('no')}</button>
+        <button class="mdui-btn mdui-ripple" onclick="delNode('${re[i]["ip"]}')" mdui-dialog-close>${$.i18n.prop('yes')}</button>
     </div>
 </div>`; 
             }
@@ -119,7 +114,7 @@ function updateAsync(){
         },
         error: function () {
             mdui.snackbar({
-                message: 'API Connect Error',
+                message: $.i18n.prop('apiconnecterror'),
                 position: 'left-bottom'
             });
         }
@@ -129,49 +124,59 @@ function snackbar(status){
     switch(status){
         case "startOk":
             mdui.snackbar({
-                message: 'Start Node',
+                message: $.i18n.prop('startnode'),
                 position: 'right-bottom'
             });
             break;
         case "isStarting":
             mdui.snackbar({
-                message: '節點正在運行',
+                message: $.i18n.prop('runnode'),
                 position: 'right-bottom'
             });
             break;
         case "stopOk":
             mdui.snackbar({
-                message: 'Stop Node',
+                message: $.i18n.prop('stopnode'),
                 position: 'right-bottom'
             });
             break;
         case "isStopped":
             mdui.snackbar({
-                message: '節點已經閂咗',
+                message: $.i18n.prop('isstopnode'),
                 position: 'right-bottom'
             });
             break;
         case "reloadOk":
             mdui.snackbar({
-                message: '節點重載',
+                message: $.i18n.prop('reloadnode'),
                 position: 'right-bottom'
             });
             break;
         case "upOk":
             mdui.snackbar({
-                message: '節點同步',
+                message: $.i18n.prop('syncnode'),
                 position: 'right-bottom'
             });
             break;
         case "updateOk":
             mdui.snackbar({
-                message: '節點同步',
+                message: $.i18n.prop('syncnode'),
+                position: 'right-bottom'
+            });
+            break;
+        case "PostError":
+            mdui.snackbar({
+                message: $.i18n.prop('nodeconnecterror'),
                 position: 'right-bottom'
             });
             break;
     }
 }
 function setNodeStatus(ip, api, status){
+    mdui.snackbar({
+        message: $.i18n.prop('posthttp'),
+        position: 'left-bottom'
+    });
     $.ajax({
         url: "/api/postNodeApi",
         type: "POST",
@@ -182,7 +187,7 @@ function setNodeStatus(ip, api, status){
         },
         error: function(){
             mdui.snackbar({
-                message: 'API Connect Error',
+                message: $.i18n.prop('apiconnecterror'),
                 position: 'left-bottom'
             });
         }
@@ -199,7 +204,7 @@ function setAllNodeStatus(status){
         },
         error: function(){
             mdui.snackbar({
-                message: 'API Connect Error',
+                message: $.i18n.prop('apiconnecterror'),
                 position: 'left-bottom'
             });
         }
@@ -216,14 +221,14 @@ function delNode(ip){
                 getNode("reload");
             }else{
                 mdui.snackbar({
-                    message: 'API Error',
+                    message: $.i18n.prop('apierror'),
                     position: 'left-bottom'
                 });
             }
         },
         error: function(){
             mdui.snackbar({
-                message: 'API Connect Error',
+                message: $.i18n.prop('apiconnecterror'),
                 position: 'left-bottom'
             });
         }
@@ -369,11 +374,11 @@ function getWebSite(){
                 <span style="font-size: 130%;font-weight: 500;">${re[i]["name"]}</span>
                 <div style="margin-top: 5px;line-height: 21px;">
                     <span class="web-2">Host: </span><span>${re[i]["host"]}</span><br>
-                    <span class="web-2">源Host: </span><span>${re[i]["source_host"]}</span><br>
-                    <span class="web-2">源伺服器: </span><span>${re[i]["source"]}</span><br>
-                    <span class="web-2">回源協議: </span><span>${re[i]["proto"]}</span><br>
-                    <span class="web-2">使用TLS: </span><span>${re[i]["tls"]}</span><br>
-                    <span class="web-2">網站註解: </span><span>${re[i]["text"]}</span>
+                    <span class="web-2">${$.i18n.prop("shost")}: </span><span>${re[i]["source_host"]}</span><br>
+                    <span class="web-2">${$.i18n.prop("sservers")}: </span><span>${re[i]["source"]}</span><br>
+                    <span class="web-2">${$.i18n.prop("sagreement")}: </span><span>${re[i]["proto"]}</span><br>
+                    <span class="web-2">${$.i18n.prop("usetls")}: </span><span>${re[i]["tls"]}</span><br>
+                    <span class="web-2">${$.i18n.prop("webnote")}: </span><span>${re[i]["text"]}</span>
                 </div>
             </div>
             <div style="float: right;" class="l-button">
@@ -385,18 +390,18 @@ function getWebSite(){
 <div class="mdui-dialog" id="${re[i]["name"]}-del">
     <div class="mdui-dialog-title">Delete ${re[i]["name"]}</div>
     <div class="mdui-dialog-content">
-        你真的要刪掉這個網站嗎？
+        ${$.i18n.prop("ifdel")}
     </div>
     <div class="mdui-dialog-actions">
-        <button class="mdui-btn mdui-ripple" mdui-dialog-close>不要！</button>
-        <button class="mdui-btn mdui-ripple" onclick="delWebsite('${re[i]["host"]}')" mdui-dialog-close>刪掉！</button>
+        <button class="mdui-btn mdui-ripple" mdui-dialog-close>${$.i18n.prop("no")}</button>
+        <button class="mdui-btn mdui-ripple" onclick="delWebsite('${re[i]["host"]}')" mdui-dialog-close>${$.i18n.prop("yes")}</button>
     </div>
 </div>`;
             }
         },
         error: function(){
             mdui.snackbar({
-                message: 'API Connect Error',
+                message: $.i18n.prop("apiconnecterror"),
                 position: 'left-bottom'
             });
         }
